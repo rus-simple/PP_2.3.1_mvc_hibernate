@@ -1,50 +1,73 @@
 package web.config;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+// Импортируем необходимые классы и аннотации для конфигурации Spring MVC и Thymeleaf
+import org.springframework.context.ApplicationContext; // Контекст приложения Spring
+import org.springframework.context.annotation.Bean; // Для определения бинов
+import org.springframework.context.annotation.ComponentScan; // Для сканирования компонентов
+import org.springframework.context.annotation.Configuration; // Обозначает класс конфигурации Spring
+import org.springframework.web.servlet.config.annotation.EnableWebMvc; // Включает поддержку MVC
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry; // Регистрация резолверов представлений
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer; // Интерфейс для настройки MVC
 
+// Импорты для Thymeleaf
+import org.thymeleaf.spring5.SpringTemplateEngine; // Основной движок шаблонов Thymeleaf
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver; // Разрешатель шаблонов Thymeleaf
+import org.thymeleaf.spring5.view.ThymeleafViewResolver; // Вью-резолвер для Thymeleaf
+
+// Объявляем класс как конфигурацию Spring
 @Configuration
+// Включаем поддержку Spring MVC
 @EnableWebMvc
+// Указываем пакет, который будет сканироваться на компоненты (например, контроллеры)
 @ComponentScan("web")
 public class WebConfig implements WebMvcConfigurer {
 
+    // Внедряем ApplicationContext через конструктор для использования в настройках шаблонов
     private final ApplicationContext applicationContext;
 
     public WebConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
-
+    /**
+     * Создаем и настраиваем бина для разрешения шаблонов Thymeleaf.
+     * Указываем путь к папке с HTML-шаблонами.
+     */
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        // Передаем ApplicationContext для поиска ресурсов
         templateResolver.setApplicationContext(applicationContext);
+        // Указываем папку, где хранятся шаблоны (относительно веб-корня)
         templateResolver.setPrefix("/WEB-INF/pages/");
+        // Указываем расширение файлов шаблонов
         templateResolver.setSuffix(".html");
         return templateResolver;
     }
 
+    /**
+     * Создаем и настраиваем движок шаблонов Thymeleaf.
+     * Он использует ранее созданный resolver.
+     */
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        // Устанавливаем разрешатель шаблонов
         templateEngine.setTemplateResolver(templateResolver());
+        // Включаем поддержку Expression Language (EL) в Spring EL Compiler для повышения производительности
         templateEngine.setEnableSpringELCompiler(true);
         return templateEngine;
     }
 
-
+    /**
+     * Настраиваем ViewResolver, который будет связывать имена представлений с шаблонами Thymeleaf.
+     */
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        // Устанавливаем движок шаблонов, который будет использоваться при рендеринге страниц
         resolver.setTemplateEngine(templateEngine());
+        // Регистрируем этот резолвер в системе MVC
         registry.viewResolver(resolver);
     }
 }
