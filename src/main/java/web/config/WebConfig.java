@@ -42,6 +42,8 @@ public class WebConfig implements WebMvcConfigurer {
         templateResolver.setPrefix("/WEB-INF/pages/");
         // Указываем расширение файлов шаблонов
         templateResolver.setSuffix(".html");
+        //устанавливает кодировку символов для шаблонов
+        templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
 
@@ -52,11 +54,15 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+
         // Устанавливаем разрешатель шаблонов
         templateEngine.setTemplateResolver(templateResolver());
+
         // Включаем поддержку Expression Language (EL) в Spring EL Compiler для повышения производительности
         templateEngine.setEnableSpringELCompiler(true);
+
         return templateEngine;
+
     }
 
     /**
@@ -69,5 +75,9 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setTemplateEngine(templateEngine());
         // Регистрируем этот резолвер в системе MVC
         registry.viewResolver(resolver);
+        // Устанавливает кодировку символов для шаблонов (UTF-8)
+        resolver.setCharacterEncoding("UTF-8");
+        // Устанавливает тип содержимого и кодировку для HTTP-ответа (HTML, UTF-8)
+        resolver.setContentType("text/html; charset=UTF-8");
     }
 }

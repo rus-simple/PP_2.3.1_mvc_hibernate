@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <meta charset="UTF-8" />
+    <title>Ваш заголовок</title>
+    <style>
+        /* Можно добавить стили прямо внутри тега <style> */
+        .centered-link {
+            display: block; /* чтобы ссылка занимала всю ширину */
+            text-align: center; /* центрировать текст внутри блока */
+            font-size: 24px; /* увеличить размер шрифта по желанию */
+            margin-top: 20px; /* немного отступа сверху, по желанию */
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -11,5 +19,9 @@
         <h1 th:text="${msg}"></h1>
     </th:block>
 </div>
+
+<!-- Оборачиваем ссылку в блок с классом для центрирования -->
+<a th:href="@{/cars}" class="centered-link">Перейти к автомобилям</a>
+
 </body>
 </html>
