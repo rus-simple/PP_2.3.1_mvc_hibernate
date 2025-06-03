@@ -2,7 +2,6 @@ package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDao;
 import web.model.User;
 import java.util.ArrayList;
@@ -27,8 +26,9 @@ public class UserServiceImp implements UserService {
         System.out.println("User с именем — " + firstname + " добавлен в базу данных.");
     }
 
-    public void removeUserById(long id) {
+    public User removeUserById(long id) {
         this.userdao.removeUserById(id);
+        return null;
     }
 
     public List<User> getAllUsers() {
@@ -50,20 +50,25 @@ public class UserServiceImp implements UserService {
         users.add(new User("Вероника", "Иванова"));
     }
 
-    @Transactional
     @Override
-    public void add(User user) {
-        // Сохраняем пользователя
-        userDao.add(user);
+    public User getUserById(long id) {
+        return userdao.getUserById(id);
     }
 
+//    @Transactional
+//    @Override
+//    public void add(User user) {
+//        // Сохраняем пользователя
+//        UserDao.add(user);
+//    }
 
-    @Override
-    public List<User> getAllUsers(int count) {
-        if (count >= users.size()) {
-            return new ArrayList<>(users); // возвращаем весь список, если запрошенное количество больше или равно размера списка
-        } else {
-            return new ArrayList<>(users.subList(0, count)); // возвращаем подсписок из первых count элементов
-        }
-    }
+
+//    @Override
+//    public List<User> getAllUsers(int count) {
+//        if (count >= users.size()) {
+//            return new ArrayList<>(users); // возвращаем весь список, если запрошенное количество больше или равно размера списка
+//        } else {
+//            return new ArrayList<>(users.subList(0, count)); // возвращаем подсписок из первых count элементов
+//        }
+//    }
 }

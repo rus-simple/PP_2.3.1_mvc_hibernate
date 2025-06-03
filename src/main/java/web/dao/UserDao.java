@@ -8,6 +8,7 @@ public interface UserDao {
     void add(User user);
 
     void saveUser(String firstname, String lastName);
+//    void saveUser(User user);
 
     void createUsersTable();
 
@@ -18,4 +19,6 @@ public interface UserDao {
     List<User> getAllUsers();
 
     void cleanUsersTable();
+
+    User getUserById(long id);
 }

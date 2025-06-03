@@ -1,7 +1,6 @@
 package web.dao;
 
 import org.hibernate.HibernateException;
-import web.MainApp;
 import web.config.DataBaseConfig;
 import web.model.User;
 import org.hibernate.Session;
@@ -9,19 +8,23 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.TypedQuery;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class UserDaoImp implements UserDao {
 
-    private static final Logger logger = Logger.getLogger(MainApp.class.getName());
+    private static final Logger logger = Logger.getLogger(UserDaoImp.class.getName());
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -39,6 +42,15 @@ public class UserDaoImp implements UserDao {
         entityManager.persist(user);
         logger.info("Пользователь успешно сохранён.");
     }
+//    @Override
+//    @Transactional
+//    public void saveUser(User user) {
+//        if (user.getId() == null || user.getId() == 0) {
+//            entityManager.persist(user);
+//        } else {
+//            entityManager.merge(user);
+//        }
+//    }
 
     @Override
     @Transactional
@@ -73,6 +85,7 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return entityManager.createQuery("from User", User.class).getResultList();
     }
@@ -83,5 +96,11 @@ public class UserDaoImp implements UserDao {
         String sql = "TRUNCATE TABLE users";
         entityManager.createNativeQuery(sql).executeUpdate();
         logger.info("Таблица успешно очищена.");
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User getUserById(long id) {
+        return entityManager.find(User.class, id);
     }
 }

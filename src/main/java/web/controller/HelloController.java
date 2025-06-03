@@ -17,9 +17,11 @@ public class HelloController {
 	public String printWelcome(ModelMap model) {
 		// Создаем список сообщений для отображения на странице
 		List<String> messages = new ArrayList<>();
-		messages.add("Hello!"); // Первое сообщение
-		messages.add("I'm Spring MVC application"); // Второе сообщение
-		messages.add("5.2.0 version by sep'19 "); // Третье сообщение с версией и датой
+		messages.add("Добро пожаловать!"); // Первое сообщение
+		messages.add("Это CRUD-приложение с использованием Spring MVC + Hibernate "); // Второе сообщение
+		messages.add("springframework version 5.3.14");
+		messages.add("hibernate version 5.6.3");
+		messages.add("mysql version 8.0.25");
 
 		// Передаем список сообщений в модель под именем "messages"
 		model.addAttribute("messages", messages);
