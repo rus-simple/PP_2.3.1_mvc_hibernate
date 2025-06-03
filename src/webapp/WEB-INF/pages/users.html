@@ -44,7 +44,11 @@
     <button type="submit">Добавить</button>
 </form>
 
-<a th:href="@{/}">Вернуться в начало</a>
+<form th:action="@{/users/clean}" method="post">
+    <button type="submit">Очистить таблицу</button>
+</form>
+
+<a th:href="@{/}">Вернуться на начальную страницу</a>
 
 </body>
 </html>

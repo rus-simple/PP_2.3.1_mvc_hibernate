@@ -3,8 +3,6 @@ package web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +15,8 @@ public class HelloController {
 	public String printWelcome(ModelMap model) {
 		// Создаем список сообщений для отображения на странице
 		List<String> messages = new ArrayList<>();
-		messages.add("Добро пожаловать!"); // Первое сообщение
-		messages.add("Это CRUD-приложение с использованием Spring MVC + Hibernate "); // Второе сообщение
+		messages.add("Добро пожаловать!");
+		messages.add("Это CRUD-приложение с использованием Spring MVC + Hibernate ");
 		messages.add("springframework version 5.3.14");
 		messages.add("hibernate version 5.6.3");
 		messages.add("mysql version 8.0.25");
@@ -26,8 +24,7 @@ public class HelloController {
 		// Передаем список сообщений в модель под именем "messages"
 		model.addAttribute("messages", messages);
 
-		// Возвращаем имя представления (шаблона) "index"
-		// Это означает, что будет использован файл index.html или index.jsp (зависит от конфигурации)
+		// Возвращаем имя представления (шаблона) "index", значит, что будет использован файл index.html
 		return "index";
 	}
 }

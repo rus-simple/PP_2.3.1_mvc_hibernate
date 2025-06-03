@@ -18,7 +18,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver; // Вью-резолв�
 @Configuration
 // Включаем поддержку Spring MVC
 @EnableWebMvc
-// Указываем пакет, который будет сканироваться на компоненты (например, контроллеры)
+// Указываем пакет для сканирования на компоненты
 @ComponentScan("web")
 public class WebConfig implements WebMvcConfigurer {
 
@@ -30,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * Создаем и настраиваем бина для разрешения шаблонов Thymeleaf.
+     * Создаем и настраиваем бин для разрешения шаблонов Thymeleaf.
      * Указываем путь к папке с HTML-шаблонами.
      */
     @Bean
@@ -60,9 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         // Включаем поддержку Expression Language (EL) в Spring EL Compiler для повышения производительности
         templateEngine.setEnableSpringELCompiler(true);
-
         return templateEngine;
-
     }
 
     /**

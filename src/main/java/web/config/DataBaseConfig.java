@@ -12,9 +12,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import web.model.User;
-
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
@@ -35,24 +32,18 @@ public class DataBaseConfig {
         return dataSource;
     }
 
-    // Создаем EntityManagerFactory
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(getDataSource());
         emf.setPackagesToScan("web.model"); // укажите пакет с вашими JPA-сущностями
-        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter()); // если используете Hibernate
-
-        // Можно добавить дополнительные свойства Hibernate, если нужно:
-        // Properties jpaProperties = new Properties();
-        // jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        // emf.setJpaProperties(jpaProperties);
-
+        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter()); //
         return emf;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-        return new JpaTransactionManager(emf);
+    public PlatformTransactionManager transactionManager() {
+        return new JpaTransactionManager(entityManagerFactory().getObject());
     }
 }

@@ -39,7 +39,7 @@ public class UserServiceImp implements UserService {
         this.userdao.cleanUsersTable();
     }
 
-    private final List<User> users = new ArrayList<>(); // список машин
+    private final List<User> users = new ArrayList<>();
 
     public UserServiceImp() {
     }
@@ -50,6 +50,6 @@ public class UserServiceImp implements UserService {
     }
 
     public void updateUser(User user) {
-        userdao.updateUser(user); // Передаем объект для обновления
+        userdao.updateUser(user);
     }
 }

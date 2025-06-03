@@ -19,12 +19,6 @@ public class UserDaoImp implements UserDao {
 
     @Override
     @Transactional
-    public void add(User user) {
-        entityManager.persist(user);
-    }
-
-    @Override
-    @Transactional
     public void saveUser(String firstname, String lastName) {
         User user = new User(firstname, lastName);
         entityManager.persist(user);
@@ -90,5 +84,4 @@ public class UserDaoImp implements UserDao {
         entityManager.merge(user); // Обновление существующей записи
         logger.info("Пользователь успешно обновлён.");
     }
-
 }
