@@ -1,24 +1,12 @@
 package web.dao;
 
-import org.hibernate.HibernateException;
-import web.config.DataBaseConfig;
 import web.model.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.TypedQuery;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-//import javax.transaction.Transactional;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
@@ -42,15 +30,6 @@ public class UserDaoImp implements UserDao {
         entityManager.persist(user);
         logger.info("Пользователь успешно сохранён.");
     }
-//    @Override
-//    @Transactional
-//    public void saveUser(User user) {
-//        if (user.getId() == null || user.getId() == 0) {
-//            entityManager.persist(user);
-//        } else {
-//            entityManager.merge(user);
-//        }
-//    }
 
     @Override
     @Transactional
@@ -59,7 +38,8 @@ public class UserDaoImp implements UserDao {
                 "id INT NOT NULL AUTO_INCREMENT, " +
                 "firstname VARCHAR(45) NOT NULL, " +
                 "lastName VARCHAR(45) NOT NULL, " +
-                "PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+                "PRIMARY KEY (id)" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
         entityManager.createNativeQuery(sql).executeUpdate();
         logger.info("Таблица 'users' успешно создана.");
     }
@@ -103,4 +83,12 @@ public class UserDaoImp implements UserDao {
     public User getUserById(long id) {
         return entityManager.find(User.class, id);
     }
+
+    @Transactional
+    @Override
+    public void updateUser(User user) {
+        entityManager.merge(user); // Обновление существующей записи
+        logger.info("Пользователь успешно обновлён.");
+    }
+
 }

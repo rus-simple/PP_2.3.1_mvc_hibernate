@@ -54,7 +54,7 @@ public class UserController {
         if (user != null) {
             user.setFirstname(firstname);
             user.setLastname(lastname);
-            userService.saveUser(firstname, lastname);
+            userService.updateUser(user);
         }
         return "redirect:/users";
     }
