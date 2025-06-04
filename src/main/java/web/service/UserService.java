@@ -7,7 +7,7 @@ public interface UserService {
     List<User> getAllUsers();
     void createUsersTable();
     void dropUsersTable();
-    void saveUser(String firstname, String lastName);
+    void saveUser(User user);
     User removeUserById(long id);
     void cleanUsersTable();
     User getUserById(long id);

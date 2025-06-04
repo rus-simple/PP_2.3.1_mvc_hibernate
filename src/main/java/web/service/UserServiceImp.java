@@ -21,8 +21,8 @@ public class UserServiceImp implements UserService {
         this.userdao.dropUsersTable();
     }
 
-    public void saveUser(String firstname, String lastName) {
-        this.userdao.saveUser(firstname, lastName);
+    public void saveUser(User user) {
+        this.userdao.saveUser(user);
     }
 
     public User removeUserById(long id) {
