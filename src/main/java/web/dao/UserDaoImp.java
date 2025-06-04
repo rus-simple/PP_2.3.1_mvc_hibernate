@@ -4,7 +4,6 @@ import web.model.User;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.logging.Logger;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;

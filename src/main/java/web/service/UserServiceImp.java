@@ -7,7 +7,7 @@ import web.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service // Обозначение класса как сервиса Spring
+@Service
 public class UserServiceImp implements UserService {
 
     @Autowired
@@ -23,7 +23,6 @@ public class UserServiceImp implements UserService {
 
     public void saveUser(String firstname, String lastName) {
         this.userdao.saveUser(firstname, lastName);
-        System.out.println("User с именем — " + firstname + " добавлен в базу данных.");
     }
 
     public User removeUserById(long id) {
